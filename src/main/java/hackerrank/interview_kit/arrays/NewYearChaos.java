@@ -2,23 +2,33 @@ package hackerrank.interview_kit.arrays;
 
 public class NewYearChaos {
 
-    static void minimumBribes(int[] q) {
-        int result = 0;
+    static void minimumBribes(int[] A) {
+        int n = A.length;
+        int count = 0;
 
-        for (int i = q.length - 1; i >= 0; i--) {
-            if (q[i] - (i + 1) > 2) {
+        for (int i = n - 1; i >= 0; i--) {
+            if (A[i] == (i + 1)) {
+                continue;
+            }
+
+            if (((i - 1) >= 0) && A[i - 1] == (i + 1)) {
+                count++;
+                int tmp = A[i];
+                A[i] = A[i - 1];
+                A[i - 1] = tmp;
+            } else if (((i - 2) >= 0) && A[i - 2] == (i + 1)) {
+                count += 2;
+                A[i - 2] = A[i - 1];
+                A[i - 1] = A[i];
+                A[i] = i + 1;
+            } else {
                 System.out.println("Too chaotic");
                 return;
             }
 
-            for (int j = Math.max(0, q[i] - 2); j < i; j++) {
-                if (q[j] > q[i]) {
-                    result++;
-                }
-            }
         }
 
-        System.out.println(result);
+        System.out.println(count);
     }
 
     public static void main(String[] args) {
